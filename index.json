@@ -1,97 +1,90 @@
 [
 {
-	"uri": "/",
+	"uri": "//localhost:1313/",
 	"title": "Container Service on AWS",
 	"tags": [],
 	"description": "",
 	"content": "Work with Amazon Elacstic Container Service and Amazon Elacstic Kubernetes Service Overall In this lab, you\u0026rsquo;ll learn the basics and practice of ECS and EKS\nContent Introduction Environment Setup Amazon Elacstic Container Service Amazon Elacstic Kubernetes Service Service Mesh Infrastructure as code with terraform Some best practice "
 },
 {
-	"uri": "/1-introduce/",
+	"uri": "//localhost:1313/1-introduce/",
 	"title": "Introduction",
 	"tags": [],
 	"description": "",
 	"content": "Container is a lightweight, portable piece of software that packages an application along with all the libraries and dependencies needed to run the application on any environment.\nBy using container technology, you will get the following advantages:\nportability: Containers can run on any environment that has a container runtime, from personal computers to public and private cloud environments. Fast startup: Containers usually start up very quickly compared to virtual machines. This helps speed up deployment and response when applications need to be scaled up or down. Ability to share system infrastructure: Containers share the kernel with the host computer, not a complete operating system like a virtual machine. Therefore, they consume less system resources and allow running multiple containers on the same server without resource issues. Flexible Management: Containers can be managed, scaled, and load-balanced more flexibly using container management tools such as Kubernetes, Docker Swarm, or similar solutions . Platform-independent packaging: Containers provide a way to package an application and all its dependencies into a portable, platform-agnostic unit. This simplifies deployment and migration of applications between different environments. With the above advantages, containers provide better flexibility, performance, and resource management than virtualization platforms such as Virtual machines.\n"
 },
 {
-	"uri": "/3-ecs/3.1-overview/",
+	"uri": "//localhost:1313/3-ecs/3.1-overview/",
 	"title": "overview",
 	"tags": [],
 	"description": "",
 	"content": "Elacstic container service: is a container orchestration service of Amazon aws service, designed to deploy and manage the scale of applications running on runtime containers such as Docker easily on Aws.\nSome key points of ECS:\nCluster management: ECS allows creating and managing clusters with EC2 or Fargate nodes to run your containers Task and service management: ECS uses the concepts of tasks and services. Task represents a group of containers running together on an EC2 instance. A service is a collection of tasks that act as an application, ECS will keep the number of service tasks stable and perform auto-scaling if necessary. Deep integration with other AWS services: ECS integrates well with other AWS services such as EC2, Elastic Load Balancing (ELB), Auto Scaling, IAM, and CloudWatch, helping you deploy and Operate applications easily and efficiently. Integration with Docker: ECS supports the use of Docker to package and run applications. You can use Docker CLI or container management tools like Docker Compose to deploy applications to ECS. Security and access management: ECS integrates with AWS Identity and Access Management (IAM), allowing you to control access to ECS resources in a granular and flexible way. "
 },
 {
-	"uri": "/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
+	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
 	"title": "Create Cluster with EC2 launch type",
 	"tags": [],
 	"description": "",
 	"content": "\rIn order for Ec2 node to join the ECS cluster, you must install enough SSM agent, ECS container agent and docker, otherwise you can use optimized AMI for Ecs (see more: https://docs.aws.amazon.com /AmazonECS/latest/developerguide/ecs-optimized_AMI.html)\nprestart: +\nStep1: Create cluster\nfrom aws console search find ECS service and select create cluster Fill in the cluster name information and click create Step2: create role for ec2 instance profile:\nIn order for an ec2 to join the ECS cluster, we need to add 2 policies: AmazonEC2ContainerServiceforEC2Role and AmazonSSMManagedInstanceCore. Without these two roles, the node will not be able to join the cluster. access IAM service -\u0026gt; Roles -\u0026gt; Create Role add 2 managed policies AmazonEC2ContainerServiceforEC2Role and AmazonSSMManagedInstanceCore to that role Step3: Create an Ec2 server with the created role\nopen the command line and search optimized AMI for ecs with the command:\naws ssm get-parameters \u0026ndash;names /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended \u0026ndash;region ap-southeast-1 reference: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/retrieve-ecs-optimized_AMI.html launch an ec2 server with the ami id you just found above with the instance profile being the role you created in step 2. I leave all traffic to the security group rules to do the lab in the advance detail -\u0026gt; instance profile section, select the role just created in step2 Fill in the user data section with the following content: #!/bin/bash\necho ECS_CLUSTER=fcj_demo_ecs \u0026raquo; /etc/ecs/ecs.config Return to the ECS console and wait until ec2 is in running state to join your cluster "
 },
 {
-	"uri": "/2-environment-setup/",
+	"uri": "//localhost:1313/2-environment-setup/",
 	"title": "Environment setup",
 	"tags": [],
 	"description": "",
 	"content": "\rI use Windows OS to do the lab. So the tools below will be used for Windows. If you want to use other tools, you can find out how to install on Google or equivalent tools.\nInstall chocolatey (This is a windows application management tool) see: https://chocolatey.org/install install aws-cli run command line window with administrator choco install awscli check the successful installation of aws-cli with the command: aws \u0026ndash;version configure aws-cli: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html Install terraform: Terraform is an infrastructure as code tool. I use this tool to automatically create aws networking resources\nInstall: choco install terraform test: terraform -v Install helm chart choco install helm check: helm verison install kubectl choco install kubectl check: kubectl version Additionally, you can install eksctl from aws: see: https://eksctl.io/installation/ "
 },
 {
-	"uri": "/3-ecs/3.2-networking/",
+	"uri": "//localhost:1313/3-ecs/3.2-networking/",
 	"title": "Networking",
 	"tags": [],
 	"description": "",
 	"content": "\rThe ECS node and fargate are communicating with each other and with the internet via a virtual private network (VPC). I will not go into detail about this topic, because this series mainly focuses on aws container services\nVPC xem: https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html\nNetwork mods: Host Mode:\nThis is the basic network mode supported in ECS, when using the container host network mode is directly linked to the server running the container, it is quite similar to the concept of docker host network Bridge Mode:\nUse a virtual bridge network to create a layer between the host and the container\u0026rsquo;s network, map the container\u0026rsquo;s port to the host\u0026rsquo;s port, mappings can be static or dynamic\nWith static mapping we can port the container to the host\u0026rsquo;s port, however static mapping only allows a single container to map to 1 port dynamic mapping by not specifying a port in the configuration, the container runtime will select a random, unused port from the temporary port range and designate that port as the public host port for the container bridge network is not used for containers running on fargate but only for containers running on EC2 servers VPC Mode:\nWith this mode, ECS creates and manages ENIs for each container. Each container will receive its own IP address in the VPC. This ENI is separate from the ENI of the EC2 server. If 1 EC2 runs multiple containers, the ENI of each container will be Separate from ec2, this can give more flexibility for port mapping and control but also has some problems\nAdvantages and disadvantages of each type of network mode 3.1. Host mode:\n3.1.1. Advantage: Performance: Host network mode allows the container to directly access all network resources of the host server, with no layer of limitation between the container and the host server. This can improve network performance for demanding applications. Simple: Host network mode eliminates the need to configure port forwarding or complex network rules to connect containers to external services. 3.1.2. Defect port conflic: In a multi-container environment, port conflicts can occur when multiple containers try to use the same port on the host server. limits scalability 3.2. Bridge mode\n3.2.1. Advantage: easy to deploy: Bridge mode is a simple, popular, and easy-to-manage deployment for containers. Supports multiple containers on one instance: You can run multiple containers on the same instance and they can communicate with each other via bridge network (see: ). Independent of the AWS environment: Bridge mode does not require specific AWS network resources and can run on self-managed servers. 3.2.2. Defect: port conflic in case of multiple containers running on the same instance: When multiple containers share the same physical server, ports may conflict, leading to difficulties in management and configuration. 3.3: VPC mode\n3.3.1. Advantage: Higher Isolation: Each container will have a network interface and a unique IP address, helping to isolate data between containers. Flexible network management: Enables you to manage your network of containers like EC2 instances through Amazon VPC. Good Integration with other AWS services: Provides easy integration with other AWS services such as Load Balancer, Security Groups, and IAM. 3.3.2. Defect: More complex to deploy and manage: Configuring and deploying an awsvpc environment can be more complex than bridge mode. Limited number of containers per instance: Because each container needs its own network interface, deploying multiple containers on one instance may cause network resource limitations. "
 },
 {
-	"uri": "/3-ecs/3.3-basic-concept/",
+	"uri": "//localhost:1313/3-ecs/3.3-basic-concept/",
 	"title": "Basic concept",
 	"tags": [],
 	"description": "",
 	"content": "This guide will guide and explain the basic concepts of service, task, task definition\u0026hellip;\nlaunch type; fargate:\nserverless service to run applications in containers without having to worry about infrastructure management suitable for large workloads requiring low operating costs Small workload only starts occasionally Batch workload EC2: containers will be run in EC2 instances with container runtime\nSuitable for large workloads that require price optimization but requires managing EC2 servers Cluster: the largest unit in ECS, it provides necessary resources such as EC2 or fargate to run the application Tasks: A resource allocated unit, a task can contain many containers Task definition Is a detailed configuration definition for the application (details: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html) Service: A group of tasks with common tasks are exposed outside or inside the cluster Container runtime: a runable image ECS connect service: provides service-to-service communication mechanism "
 },
 {
-	"uri": "/3-ecs/",
+	"uri": "//localhost:1313/3-ecs/",
 	"title": "Elacstic Container Service",
 	"tags": [],
 	"description": "",
 	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\n3.5. cluster and autoscaling\n3.6. logging\n3.7. clean\n"
 },
 {
-	"uri": "/4-eks/",
-	"title": "Elacstic Kubernetes Service",
-	"tags": [],
-	"description": "",
-	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 4.1. overview 4.2. k8s resource\n4.3. manage control plane\n4.4. expose service\n4.5. storage\n4.6. auto scaling\n4.7. observability\n4.8. security 4.9. networking 4.10. CI/CD\n"
-},
-{
-	"uri": "/3-ecs/3.4-create-cluster/",
+	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/",
 	"title": "Create Cluster",
 	"tags": [],
 	"description": "",
 	"content": "Overview In this lab we will create a cluster with EC2 launch type and fargate\nContent:\n3.4.1. create cluster with ec2 launch type 4.3.2. create cluster with fargate "
 },
 {
-	"uri": "/6-infrastructure-as-code/",
-	"title": "Port Forwarding",
+	"uri": "//localhost:1313/4-eks/",
+	"title": "Elacstic Kubernetes Service",
 	"tags": [],
 	"description": "",
-	"content": "\rPort Forwarding is a useful way to redirect network traffic from one IP address - Port to another IP address - Port. With Port Forwarding we can access an EC2 instance located in the private subnet from our workstation.\nWe will configure Port Forwarding for the RDP connection between our machine and Private Windows Instance located in the private subnet we created for this exercise.\nCreate IAM user with permission to connect SSM Go to IAM service management console Click Users , then click Add users. At the Add user page. In the User name field, enter Portfwd. Click on Access key - Programmatic access. Click Next: Permissions. Click Attach existing policies directly.\nIn the search box, enter ssm. Click on AmazonSSMFullAccess. Click Next: Tags, click Next: Reviews. Click Create user. Save Access key ID and Secret access key information to perform AWS CLI configuration.\nInstall and Configure AWS CLI and Session Manager Plugin To perform this hands-on, make sure your workstation has AWS CLI and Session Manager Plugin installed -manager-working-with-install-plugin.html)\nMore hands-on tutorials on installing and configuring the AWS CLI can be found here.\nWith Windows, when extracting the Session Manager Plugin installation folder, run the install.bat file with Administrator permission to perform the installation.\nImplement Portforwarding Run the command below in Command Prompt on your machine to configure Port Forwarding. aws ssm start-session --target (your ID windows instance) --document-name AWS-StartPortForwardingSession --parameters portNumber=\u0026#34;3389\u0026#34;,localPortNumber=\u0026#34;9999\u0026#34; --region (your region) Windows Private Instance Instance ID information can be found when you view the EC2 Windows Private Instance server details.\nExample command: C:\\Windows\\system32\u0026gt;aws ssm start-session --target i-06343d7377486760c --document-name AWS-StartPortForwardingSession --parameters portNumber=\u0026#34;3389\u0026#34;,localPortNumber=\u0026#34;9999\u0026#34; --region ap-southeast-1 If your command gives an error like below: SessionManagerPlugin is not found. Please refer to SessionManager Documentation here: http://docs.aws.amazon.com/console/systems-manager/session-manager-plugin-not-found\nProve that you have not successfully installed the Session Manager Plugin. You may need to relaunch Command Prompt after installing Session Manager Plugin.\nConnect to the Private Windows Instance you created using the Remote Desktop tool on your workstation. In the Computer section: enter localhost:9999. Return to the administration interface of the System Manager - Session Manager service. Click tab Session history. We will see session logs with Document name AWS-StartPortForwardingSession. Congratulations on completing the lab on how to use Session Manager to connect and store session logs in S3 bucket. Remember to perform resource cleanup to avoid unintended costs.\n"
+	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 4.1. overview 4.2. k8s resource\n4.3. manage control plane\n4.4. expose service\n4.5. storage\n4.6. auto scaling\n4.7. observability\n4.8. security 4.9. networking 4.10. CI/CD\n"
 },
 {
-	"uri": "/6-cleanup/",
+	"uri": "//localhost:1313/6-cleanup/",
 	"title": "Clean up resources",
 	"tags": [],
 	"description": "",
 	"content": "We will take the following steps to delete the resources we created in this exercise.\nDelete EC2 instance Go to EC2 service management console\nClick Instances. Select both Public Linux Instance and Private Windows Instance instances. Click Instance state. Click Terminate instance, then click Terminate to confirm. Go to IAM service management console\nClick Roles. In the search box, enter SSM. Click to select SSM-Role. Click Delete, then enter the role name SSM-Role and click Delete to delete the role. Click Users. Click on user Portfwd. Click Delete, then enter the user name Portfwd and click Delete to delete the user. Delete S3 bucket Access System Manager - Session Manager service management console.\nClick the Preferences tab. Click Edit. Scroll down. In the section S3 logging. Uncheck Enable to disable logging. Scroll down. Click Save. Go to S3 service management console\nClick on the S3 bucket we created for this lab. (Example: lab-fcj-bucket-0001 ) Click Empty. Enter permanently delete, then click Empty to proceed to delete the object in the bucket. Click Exit. After deleting all objects in the bucket, click Delete\nEnter the name of the S3 bucket, then click Delete bucket to proceed with deleting the S3 bucket. Delete VPC Endpoints Go to VPC service management console Click Endpoints. Select the 4 endpoints we created for the lab including SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. In the confirm box, enter delete.\nClick Delete to proceed with deleting endpoints. Click the refresh icon, check that all endpoints have been deleted before proceeding to the next step.\nDelete VPC Go to VPC service management console\nClick Your VPCs. Click on Lab VPC. Click Actions. Click Delete VPC. In the confirm box, enter delete to confirm, click Delete to delete Lab VPC and related resources.\n"
 },
 {
-	"uri": "/categories/",
+	"uri": "//localhost:1313/categories/",
 	"title": "Categories",
 	"tags": [],
 	"description": "",
 	"content": ""
 },
 {
-	"uri": "/tags/",
+	"uri": "//localhost:1313/tags/",
 	"title": "Tags",
 	"tags": [],
 	"description": "",

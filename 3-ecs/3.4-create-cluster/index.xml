@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Create Cluster on Container service on AWS</title>
-    <link>/3-ecs/3.4-create-cluster/</link>
+    <link>//localhost:1313/3-ecs/3.4-create-cluster/</link>
     <description>Recent content in Create Cluster on Container service on AWS</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <atom:link href="/3-ecs/3.4-create-cluster/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/3-ecs/3.4-create-cluster/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
