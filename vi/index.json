@@ -18,7 +18,7 @@
 	"title": "Khởi tạo cluster với EC2 launch type",
 	"tags": [],
 	"description": "",
-	"content": "\rĐể Ec2 node có thể join vào trong ECS cluster bạn phải cài đặt đủ SSM agent, ECS container agent và docker, nếu không bạn có thể sử dụng optimized AMI cho Ecs (xem thêm: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html)\nprestart: +\nStep1: Tạo cluster\ntừ aws console search tìm dịch vụ ECS rồi chọn create cluster Điền thông tin tên cluter rồi click create Step2: tạo role cho ec2 instance profile:\nđể một ec2 join với cluster ECS chúng ta cần thêm 2 policy: AmazonEC2ContainerServiceforEC2Role và AmazonSSMManagedInstanceCore nếu thiếu 2 role này node sẽ không thể join vào cluster\ntruy cập dịch vụ IAM -\u0026gt; Roles -\u0026gt; Create Role\nadd thêm 2 managed policy AmazonEC2ContainerServiceforEC2Role và AmazonSSMManagedInstanceCore vào role đó Step3: Tạo 1 server Ec2 với role đã tạo\nmở command line và search optimized AMI cho ecs với lệnh:\naws ssm get-parameters \u0026ndash;names /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended \u0026ndash;region ap-southeast-1 reference: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/retrieve-ecs-optimized_AMI.html launch một ec2 server với ami id vừa tìm được ở trên với instance profile là role bạn đã tạo ở step 2. mình để all traffic cho các rule của security group để làm lab tại phần advance detail -\u0026gt; instance profile chọn role vừa tạo ở step2 điền thêm phần user data với nội dung: #!/bin/bash echo ECS_CLUSTER=fcj_demo_ecs \u0026raquo; /etc/ecs/ecs.config trở lại console ECS và chờ khi ec2 ở trạng thái running sẽ join vào cluster của bạn "
+	"content": "\rĐể Ec2 node có thể join vào trong ECS cluster bạn phải cài đặt đủ SSM agent, ECS container agent và docker, nếu không bạn có thể sử dụng optimized AMI cho Ecs (xem thêm: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html)\nprestart:\nMình sử dung terraform cho việc tạo các VPC resource: link repo tại đây https://github.com/linhfishhh/workshop-source chạy command terraform init và terraform apply -auto-approve Step1: Tạo cluster\ntừ aws console search tìm dịch vụ ECS rồi chọn create cluster Điền thông tin tên cluter rồi click create Step2: tạo role cho ec2 instance profile:\nđể một ec2 join với cluster ECS chúng ta cần thêm 2 policy: AmazonEC2ContainerServiceforEC2Role và AmazonSSMManagedInstanceCore nếu thiếu 2 role này node sẽ không thể join vào cluster\ntruy cập dịch vụ IAM -\u0026gt; Roles -\u0026gt; Create Role\nadd thêm 2 managed policy AmazonEC2ContainerServiceforEC2Role và AmazonSSMManagedInstanceCore vào role đó Step3: Tạo 1 server Ec2 với role đã tạo\nmở command line và search optimized AMI cho ecs với lệnh:\naws ssm get-parameters \u0026ndash;names /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended \u0026ndash;region ap-southeast-1 reference: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/retrieve-ecs-optimized_AMI.html launch một ec2 server với ami id vừa tìm được ở trên với instance profile là role bạn đã tạo ở step 2. mình để all traffic cho các rule của security group để làm lab tại phần advance detail -\u0026gt; instance profile chọn role vừa tạo ở step2 điền thêm phần user data với nội dung: #!/bin/bash echo ECS_CLUSTER=fcj_demo_ecs \u0026raquo; /etc/ecs/ecs.config trở lại console ECS và chờ khi ec2 ở trạng thái running sẽ join vào cluster của bạn "
 },
 {
 	"uri": "//localhost:1313/vi/3-ecs/3.1-overview/",
@@ -26,6 +26,13 @@
 	"tags": [],
 	"description": "",
 	"content": "Elacstic container service: là một dịch vụ container orchestration của Amazon aws service, thiết kế để triển khai, quản lý scale các ứng dụng chạy trên các runtime container như Docker một cách dễ dàng trên Aws.\nMột số điểm chính của ECS:\nQuản lý cluster: ECS cho phép tạo và quản lý cluster với các node EC2 hoặc Fargate để chạy các container của bạn Quản lý task và service: ECS sử dụng các khái niệm về task và service. Task đại diện cho một nhóm các container chạy cùng nhau trên một instance EC2. Service là một tập hợp các task đóng vai trò như một ứng dụng, ECS sẽ giữ cho số lượng task của service ổn định và thực hiện auto-scaling nếu cần thiết. Tích hợp sâu sắc với các dịch vụ AWS khác: ECS tích hợp tốt với các dịch vụ khác của AWS như EC2, Elastic Load Balancing (ELB), Auto Scaling, IAM và CloudWatch, giúp bạn triển khai và vận hành các ứng dụng một cách dễ dàng và hiệu quả. Tích hợp với Docker: ECS hỗ trợ việc sử dụng Docker để đóng gói và chạy các ứng dụng. Bạn có thể sử dụng Docker CLI hoặc các công cụ quản lý container như Docker Compose để triển khai các ứng dụng lên ECS. Bảo mật và quản lý quyền truy cập: ECS tích hợp với AWS Identity and Access Management (IAM), cho phép bạn kiểm soát quyền truy cập vào các tài nguyên của ECS một cách chi tiết và linh hoạt. "
+},
+{
+	"uri": "//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/",
+	"title": "Create Cluster with fargate launch type",
+	"tags": [],
+	"description": "",
+	"content": "Step1: khởi tạo VPC, subnet và các resource liên quan đến network\nclone source code terraform tại repo: https://github.com/linhfishhh/workshop-source cd vpc terraform init terraform apply -auto-approve step2: vào màn hình aws console của dịch vụ ecs\nchọn tạo cluster nhập tên và chọn option fargate click tạo cluster "
 },
 {
 	"uri": "//localhost:1313/vi/3-ecs/3.2-networking/",
@@ -53,7 +60,14 @@
 	"title": "Elacstic Container Service",
 	"tags": [],
 	"description": "",
-	"content": "Trong lab này, chúng ta sẽ tạo VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nNội dung 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\n3.5. cluster and autoscaling\n3.6. logging\n3.7. clean\n"
+	"content": "Trong lab này, chúng ta sẽ tạo VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nNội dung 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\n3.5. auto scaling\n3.6. monitoring\n3.7. clean\n"
+},
+{
+	"uri": "//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/",
+	"title": "Triển khai sample application",
+	"tags": [],
+	"description": "",
+	"content": "\rtrong lab này mình sẽ hướng dẫn triển khai một service nhỏ trên aws ecs kết hợp với cloud map\n"
 },
 {
 	"uri": "//localhost:1313/vi/4-eks/",
@@ -67,7 +81,7 @@
 	"title": "Khởi tạo 1 ECS cluster",
 	"tags": [],
 	"description": "",
-	"content": "Tổng quan trong lab này chúng ta sẽ tạo 1 cluster với EC2 launch type và fargate\nNội dung:\n3.4.1. tạo cluster với ec2 launch type 4.3.2. tạo cluster với fargate "
+	"content": "Tổng quan trong lab này chúng ta sẽ tạo 1 cluster với EC2 launch type và fargate\nNội dung:\n3.4.1. tạo cluster với ec2 launch type 3.4.2. tạo cluster với fargate 3.4.3. triển khai ứng dụng sample với ECS "
 },
 {
 	"uri": "//localhost:1313/vi/6-cleanup/",
@@ -75,13 +89,6 @@
 	"tags": [],
 	"description": "",
 	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa EC2 instance Truy cập giao diện quản trị dịch vụ EC2 Click Instances. Click chọn cả 2 instance Public Linux Instance và Private Windows Instance. Click Instance state. Click Terminate instance, sau đó click Terminate để xác nhận. Truy cập giao diện quản trị dịch vụ IAM Click Roles. Tại ô tìm kiếm , điền SSM. Click chọn SSM-Role. Click Delete, sau đó điền tên role SSM-Role và click Delete để xóa role. Click Users. Click chọn user Portfwd. Click Delete, sau đó điền tên user Portfwd và click Delete để xóa user. Xóa S3 bucket Truy cập giao diện quản trị dịch vụ System Manager - Session Manager. Click tab Preferences. Click Edit. Kéo chuột xuống dưới. Tại mục S3 logging. Bỏ chọn Enable để tắt tính năng logging. Kéo chuột xuống dưới. Click Save. Truy cập giao diện quản trị dịch vụ S3 Click chọn S3 bucket chúng ta đã tạo cho bài thực hành. ( Ví dụ : lab-fcj-bucket-0001 ) Click Empty. Điền permanently delete, sau đó click Empty để tiến hành xóa object trong bucket. Click Exit. Sau khi xóa hết object trong bucket, click Delete Điền tên S3 bucket, sau đó click Delete bucket để tiến hành xóa S3 bucket. Xóa các VPC Endpoint Truy cập vào giao diện quản trị dịch vụ VPC Click Endpoints. Chọn 4 endpoints chúng ta đã tạo cho bài thực hành bao gồm SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. Tại ô confirm , điền delete. Click Delete để tiến hành xóa các endpoints. Click biểu tượng refresh, kiểm tra tất cả các endpoints đã bị xóa trước khi làm bước tiếp theo. Xóa VPC Truy cập vào giao diện quản trị dịch vụ VPC Click Your VPCs. Click chọn Lab VPC. Click Actions. Click Delete VPC. Tại ô confirm, điền delete để xác nhận, click Delete để thực hiện xóa Lab VPC và các tài nguyên liên quan. "
-},
-{
-	"uri": "//localhost:1313/vi/6-infrastructure-as-code/",
-	"title": "",
-	"tags": [],
-	"description": "",
-	"content": ""
 },
 {
 	"uri": "//localhost:1313/vi/categories/",

@@ -51,6 +51,18 @@
                 href="//localhost:1313/vi/3-ecs/3.1-overview/"
                 />
   </url><url>
+    <loc>//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
+                />
+  </url><url>
     <loc>//localhost:1313/vi/3-ecs/3.2-networking/</loc>
     <xhtml:link
                 rel="alternate"
@@ -99,6 +111,18 @@
                 href="//localhost:1313/vi/3-ecs/"
                 />
   </url><url>
+    <loc>//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
+                />
+  </url><url>
     <loc>//localhost:1313/vi/4-eks/</loc>
     <xhtml:link
                 rel="alternate"
@@ -134,18 +158,6 @@
                 rel="alternate"
                 hreflang="vi"
                 href="//localhost:1313/vi/6-cleanup/"
-                />
-  </url><url>
-    <loc>//localhost:1313/vi/6-infrastructure-as-code/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="//localhost:1313/6-infrastructure-as-code/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="vi"
-                href="//localhost:1313/vi/6-infrastructure-as-code/"
                 />
   </url><url>
     <loc>//localhost:1313/vi/categories/</loc>

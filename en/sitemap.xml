@@ -15,6 +15,18 @@
                 href="//localhost:1313/"
                 />
   </url><url>
+    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
+                />
+  </url><url>
     <loc>//localhost:1313/1-introduce/</loc>
     <xhtml:link
                 rel="alternate"
@@ -39,16 +51,16 @@
                 href="//localhost:1313/3-ecs/3.1-overview/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/</loc>
+    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
+                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
+                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
                 />
   </url><url>
     <loc>//localhost:1313/2-environment-setup/</loc>
@@ -87,6 +99,18 @@
                 href="//localhost:1313/3-ecs/3.3-basic-concept/"
                 />
   </url><url>
+    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
+                />
+  </url><url>
     <loc>//localhost:1313/3-ecs/</loc>
     <xhtml:link
                 rel="alternate"
@@ -97,18 +121,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="//localhost:1313/3-ecs/"
-                />
-  </url><url>
-    <loc>//localhost:1313/4-eks/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="vi"
-                href="//localhost:1313/vi/4-eks/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="//localhost:1313/4-eks/"
                 />
   </url><url>
     <loc>//localhost:1313/3-ecs/3.4-create-cluster/</loc>
@@ -123,16 +135,16 @@
                 href="//localhost:1313/3-ecs/3.4-create-cluster/"
                 />
   </url><url>
-    <loc>//localhost:1313/6-infrastructure-as-code/</loc>
+    <loc>//localhost:1313/4-eks/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-infrastructure-as-code/"
+                href="//localhost:1313/vi/4-eks/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-infrastructure-as-code/"
+                href="//localhost:1313/4-eks/"
                 />
   </url><url>
     <loc>//localhost:1313/6-cleanup/</loc>
