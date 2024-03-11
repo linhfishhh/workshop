@@ -4,7 +4,7 @@
 	"title": "Container Service on AWS",
 	"tags": [],
 	"description": "",
-	"content": "Work with Amazon Elacstic Container Service and Amazon Elacstic Kubernetes Service Overall In this lab, you\u0026rsquo;ll learn the basics and practice of ECS and EKS\nContent Introduction Environment Setup Amazon Elacstic Container Service Amazon Elacstic Kubernetes Service Service Mesh Infrastructure as code with terraform Some best practice "
+	"content": "Work with Amazon Elacstic Container Service and Amazon Elacstic Kubernetes Service Overall In this lab, you\u0026rsquo;ll learn the basics and practice of ECS and EKS\nContent Introduction Environment Setup Amazon Elacstic Container Service "
 },
 {
 	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
@@ -60,14 +60,14 @@
 	"title": "deploy sample application",
 	"tags": [],
 	"description": "",
-	"content": ""
+	"content": "\rIn this lab, I will show you how to deploy a small service on AWS ecs combined with cloud map\nCloud map: As a service discovery service, with cloud map we can define custom names for our application resources, and this service maintains updated locations of alternative resources. That flexibility increases availability and connectivity because the cloud map always updates the latest information on resources.\nHere I use the vpc architecture, and the ECS cluster created in the previous section\ndiagram: step 1: create an Application loadbalancer\nLog in to the console screen, select the loadbalancer service, then click create load balancer, select the type as application loadbalancer Enter the load balancer name, select internet facing to expose it to the internet select all subnets for higher availability security group for all traffic from the internet create target group as ipaddress then select create album Step2: create a definition task:\nFill in the information to define the container configuration and architecture as shown below I leave other options as default step3: create a service from task definition\nWhen created, the service will create many tasks corresponding to the running runtime containers based on task definition Open the ECS screen console, click on fcj_demo_ecs then select create service select launch type as fargate Select the define task family as the define task you just created select turn on connect select networking and subnet as private subnet Note: when the container is running in a private subnet, you need to make sure that there is a NAT gateway so fargate can pull the image from the public repo. select loadbalancer and listener created in step 1 select security allow all traffic Other options leave as default click create service wait for the container to start and access the loadbalancer link to see the results "
 },
 {
 	"uri": "//localhost:1313/3-ecs/",
 	"title": "Elacstic Container Service",
 	"tags": [],
 	"description": "",
-	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\n3.5. auto scaling\n3.6. monitoring\n3.7. clean\n"
+	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\\\n"
 },
 {
 	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/",
@@ -78,17 +78,17 @@
 },
 {
 	"uri": "//localhost:1313/4-eks/",
-	"title": "Elacstic Kubernetes Service",
+	"title": "",
 	"tags": [],
 	"description": "",
-	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 4.1. overview 4.2. k8s resource\n4.3. manage control plane\n4.4. expose service\n4.5. storage\n4.6. auto scaling\n4.7. observability\n4.8. security 4.9. networking 4.10. CI/CD\n"
+	"content": " "
 },
 {
 	"uri": "//localhost:1313/6-cleanup/",
-	"title": "Clean up resources",
+	"title": "",
 	"tags": [],
 	"description": "",
-	"content": "We will take the following steps to delete the resources we created in this exercise.\nDelete EC2 instance Go to EC2 service management console\nClick Instances. Select both Public Linux Instance and Private Windows Instance instances. Click Instance state. Click Terminate instance, then click Terminate to confirm. Go to IAM service management console\nClick Roles. In the search box, enter SSM. Click to select SSM-Role. Click Delete, then enter the role name SSM-Role and click Delete to delete the role. Click Users. Click on user Portfwd. Click Delete, then enter the user name Portfwd and click Delete to delete the user. Delete S3 bucket Access System Manager - Session Manager service management console.\nClick the Preferences tab. Click Edit. Scroll down. In the section S3 logging. Uncheck Enable to disable logging. Scroll down. Click Save. Go to S3 service management console\nClick on the S3 bucket we created for this lab. (Example: lab-fcj-bucket-0001 ) Click Empty. Enter permanently delete, then click Empty to proceed to delete the object in the bucket. Click Exit. After deleting all objects in the bucket, click Delete\nEnter the name of the S3 bucket, then click Delete bucket to proceed with deleting the S3 bucket. Delete VPC Endpoints Go to VPC service management console Click Endpoints. Select the 4 endpoints we created for the lab including SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. In the confirm box, enter delete.\nClick Delete to proceed with deleting endpoints. Click the refresh icon, check that all endpoints have been deleted before proceeding to the next step.\nDelete VPC Go to VPC service management console\nClick Your VPCs. Click on Lab VPC. Click Actions. Click Delete VPC. In the confirm box, enter delete to confirm, click Delete to delete Lab VPC and related resources.\n"
+	"content": " "
 },
 {
 	"uri": "//localhost:1313/categories/",

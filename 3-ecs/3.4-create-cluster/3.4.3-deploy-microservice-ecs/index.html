@@ -12,21 +12,21 @@
     <title>deploy sample application :: Container service on AWS</title>
 
     
-    <link href="../../../css/nucleus.css?1710052815" rel="stylesheet">
-    <link href="../../../css/fontawesome-all.min.css?1710052815" rel="stylesheet">
-    <link href="../../../css/hybrid.css?1710052815" rel="stylesheet">
-    <link href="../../../css/featherlight.min.css?1710052815" rel="stylesheet">
-    <link href="../../../css/perfect-scrollbar.min.css?1710052815" rel="stylesheet">
-    <link href="../../../css/auto-complete.css?1710052815" rel="stylesheet">
-    <link href="../../../css/atom-one-dark-reasonable.css?1710052815" rel="stylesheet">
-    <link href="../../../css/theme.css?1710052815" rel="stylesheet">
-    <link href="../../../css/hugo-theme.css?1710052815" rel="stylesheet">
+    <link href="../../../css/nucleus.css?1710174364" rel="stylesheet">
+    <link href="../../../css/fontawesome-all.min.css?1710174364" rel="stylesheet">
+    <link href="../../../css/hybrid.css?1710174364" rel="stylesheet">
+    <link href="../../../css/featherlight.min.css?1710174364" rel="stylesheet">
+    <link href="../../../css/perfect-scrollbar.min.css?1710174364" rel="stylesheet">
+    <link href="../../../css/auto-complete.css?1710174364" rel="stylesheet">
+    <link href="../../../css/atom-one-dark-reasonable.css?1710174364" rel="stylesheet">
+    <link href="../../../css/theme.css?1710174364" rel="stylesheet">
+    <link href="../../../css/hugo-theme.css?1710174364" rel="stylesheet">
     
-    <link href="../../../css/theme-workshop.css?1710052815" rel="stylesheet">
+    <link href="../../../css/theme-workshop.css?1710174364" rel="stylesheet">
     
     
 
-    <script src="../../../js/jquery-3.3.1.min.js?1710052815"></script>
+    <script src="../../../js/jquery-3.3.1.min.js?1710174364"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="../../../js/lunr.min.js?1710052815"></script>
-<script type="text/javascript" src="../../../js/auto-complete.js?1710052815"></script>
+<script type="text/javascript" src="../../../js/lunr.min.js?1710174364"></script>
+<script type="text/javascript" src="../../../js/auto-complete.js?1710174364"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="../../../js/search.js?1710052815"></script>
+<script type="text/javascript" src="../../../js/search.js?1710174364"></script>
 
     
   </div>
@@ -380,13 +380,13 @@
  
   
     
-    <li data-nav-id="/4-eks/" title="Elacstic Kubernetes Service" class="dd-item 
+    <li data-nav-id="/4-eks/" title="" class="dd-item 
         
         
         
         ">
       <a href="../../../4-eks/">
-           <b> 4. </b> Elacstic Kubernetes Service
+          
           
             <i class="fas fa-check read-icon"></i>
           
@@ -406,13 +406,13 @@
  
   
     
-    <li data-nav-id="/6-cleanup/" title="Clean up resources" class="dd-item 
+    <li data-nav-id="/6-cleanup/" title="" class="dd-item 
         
         
         
         ">
       <a href="../../../6-cleanup/">
-          <b>6. </b>Clean up resources
+          
           
             <i class="fas fa-check read-icon"></i>
           
@@ -609,6 +609,64 @@
 
 
 	
+<div class="notices info" ><p>In this lab, I will show you how to deploy a small service on AWS ecs combined with cloud map</p>
+</div>
+
+<p><strong>Cloud map</strong>: As a service discovery service, with cloud map we can define custom names for our application resources, and this service maintains updated locations of alternative resources. That flexibility increases availability and connectivity because the cloud map always updates the latest information on resources.</p>
+
+<div class="notices info" ><p>Here I use the vpc architecture, and the ECS cluster created in the previous section</p>
+</div>
+
+<p><strong>diagram</strong>:
+<img alt="create alb" src="../../../images/3.ecs/3.4.15.diagram.png"></p>
+<p><strong>step 1</strong>: create an Application loadbalancer</p>
+<ul>
+<li>Log in to the console screen, select the loadbalancer service, then click create load balancer, select the type as application loadbalancer
+<img alt="create alb" src="../../../images/3.ecs/3.4.15-create-alb.png"></li>
+<li>Enter the load balancer name, select internet facing to expose it to the internet
+<img alt="create alb" src="../../../images/3.ecs/3.4.16.create-alb.png"></li>
+<li>select all subnets for higher availability
+<img alt="create alb" src="../../../images/3.ecs/3.4.17.create-alb.png"></li>
+<li>security group for all traffic from the internet
+<img alt="create alb" src="../../../images/3.ecs/3.4.18.create-alb.png"></li>
+<li>create target group as ipaddress
+then select create album
+<img alt="create alb" src="../../../images/3.ecs/3.4.19.create-alb.png">
+<img alt="create alb" src="../../../images/3.ecs/3.4.20.create-alb.png"></li>
+</ul>
+<p><strong>Step2</strong>: create a definition task:</p>
+<ul>
+<li>Fill in the information to define the container configuration and architecture as shown below
+<img alt="create tf" src="../../../images/3.ecs/3.4.21.create-taskdf.png">
+<img alt="create tf" src="../../../images/3.ecs/3.4.21.create-tf.png">
+<img alt="create tf" src="../../../images/3.ecs/3.4.22.create-tf.png"></li>
+<li>I leave other options as default</li>
+</ul>
+<p><strong>step3</strong>: create a service from task definition</p>
+<ul>
+<li>When created, the service will create many tasks corresponding to the running runtime containers based on task definition</li>
+<li>Open the ECS screen console, click on fcj_demo_ecs then select create service</li>
+<li>select launch type as fargate</li>
+</ul>
+<p><img alt="create tf" src="../../../images/3.ecs/3.4.23-create-service.png"></p>
+<ul>
+<li>Select the define task family as the define task you just created
+<img alt="create tf" src="../../../images/3.ecs/3.4.24.create-service.png"></li>
+<li>select turn on connect
+<img alt="create tf" src="../../../images/3.ecs/3.4.25.create-service.png"></li>
+<li>select networking and subnet as private subnet</li>
+<li>Note: when the container is running in a private subnet, you need to make sure that there is a NAT gateway so fargate can pull the image from the public repo.
+<img alt="create tf" src="../../../images/3.ecs/3.4.26.create-service.png"></li>
+<li>select loadbalancer and listener created in step 1</li>
+<li>select security allow all traffic
+<img alt="create tf" src="../../../images/3.ecs/3.4.27.create-service.png">
+<img alt="create tf" src="../../../images/3.ecs/3.4.28.create-service.png"></li>
+<li>Other options leave as default</li>
+<li>click create service</li>
+<li>wait for the container to start and access the loadbalancer link to see the results
+<img alt="create tf" src="../../../images/3.ecs/3.4.29.check-status.png"></li>
+</ul>
+
 
 
 
@@ -866,7 +924,7 @@
 			<a class="nav nav-prev" href="../../../3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/" title="Create Cluster with fargate launch type"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="../../../4-eks/" title="Elacstic Kubernetes Service" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="../../../4-eks/" title="" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -876,19 +934,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="../../../js/clipboard.min.js?1710052815"></script>
-    <script src="../../../js/perfect-scrollbar.min.js?1710052815"></script>
-    <script src="../../../js/perfect-scrollbar.jquery.min.js?1710052815"></script>
-    <script src="../../../js/jquery.sticky.js?1710052815"></script>
-    <script src="../../../js/featherlight.min.js?1710052815"></script>
-    <script src="../../../js/highlight.pack.js?1710052815"></script>
+    <script src="../../../js/clipboard.min.js?1710174364"></script>
+    <script src="../../../js/perfect-scrollbar.min.js?1710174364"></script>
+    <script src="../../../js/perfect-scrollbar.jquery.min.js?1710174364"></script>
+    <script src="../../../js/jquery.sticky.js?1710174364"></script>
+    <script src="../../../js/featherlight.min.js?1710174364"></script>
+    <script src="../../../js/highlight.pack.js?1710174364"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="../../../js/modernizr.custom-3.6.0.js?1710052815"></script>
-    <script src="../../../js/learn.js?1710052815"></script>
-    <script src="../../../js/hugo-learn.js?1710052815"></script>
+    <script src="../../../js/modernizr.custom-3.6.0.js?1710174364"></script>
+    <script src="../../../js/learn.js?1710174364"></script>
+    <script src="../../../js/hugo-learn.js?1710174364"></script>
 
-    <link href="../../../mermaid/mermaid.css?1710052815" rel="stylesheet" />
-    <script src="../../../mermaid/mermaid.js?1710052815"></script>
+    <link href="../../../mermaid/mermaid.css?1710174364" rel="stylesheet" />
+    <script src="../../../mermaid/mermaid.js?1710174364"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

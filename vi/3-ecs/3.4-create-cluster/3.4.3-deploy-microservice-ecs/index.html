@@ -12,21 +12,21 @@
     <title>Triển khai sample application :: Container service trên AWS</title>
 
     
-    <link href="../../../../css/nucleus.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/fontawesome-all.min.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/hybrid.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/featherlight.min.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/perfect-scrollbar.min.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/auto-complete.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/atom-one-dark-reasonable.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/theme.css?1710052815" rel="stylesheet">
-    <link href="../../../../css/hugo-theme.css?1710052815" rel="stylesheet">
+    <link href="../../../../css/nucleus.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/fontawesome-all.min.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/hybrid.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/featherlight.min.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/perfect-scrollbar.min.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/auto-complete.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/atom-one-dark-reasonable.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/theme.css?1710174364" rel="stylesheet">
+    <link href="../../../../css/hugo-theme.css?1710174364" rel="stylesheet">
     
-    <link href="../../../../css/theme-workshop.css?1710052815" rel="stylesheet">
+    <link href="../../../../css/theme-workshop.css?1710174364" rel="stylesheet">
     
     
 
-    <script src="../../../../js/jquery-3.3.1.min.js?1710052815"></script>
+    <script src="../../../../js/jquery-3.3.1.min.js?1710174364"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="../../../../js/lunr.min.js?1710052815"></script>
-<script type="text/javascript" src="../../../../js/auto-complete.js?1710052815"></script>
+<script type="text/javascript" src="../../../../js/lunr.min.js?1710174364"></script>
+<script type="text/javascript" src="../../../../js/auto-complete.js?1710174364"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="../../../../js/search.js?1710052815"></script>
+<script type="text/javascript" src="../../../../js/search.js?1710174364"></script>
 
     
   </div>
@@ -380,13 +380,13 @@
  
   
     
-    <li data-nav-id="/vi/4-eks/" title="Elacstic Kubernetes Service" class="dd-item 
+    <li data-nav-id="/vi/4-eks/" title="" class="dd-item 
         
         
         
         ">
       <a href="../../../../vi/4-eks/">
-           <b> 4. </b> Elacstic Kubernetes Service
+          
           
             <i class="fas fa-check read-icon"></i>
           
@@ -406,13 +406,13 @@
  
   
     
-    <li data-nav-id="/vi/6-cleanup/" title="Dọn dẹp tài nguyên  " class="dd-item 
+    <li data-nav-id="/vi/6-cleanup/" title="" class="dd-item 
         
         
         
         ">
       <a href="../../../../vi/6-cleanup/">
-          <b>6. </b>Dọn dẹp tài nguyên  
+          
           
             <i class="fas fa-check read-icon"></i>
           
@@ -612,6 +612,60 @@
 <div class="notices info" ><p>trong lab này mình sẽ hướng dẫn triển khai một service nhỏ trên aws ecs kết hợp với cloud map</p>
 </div>
 
+<p><strong>Cloud map</strong>: Là một dịch vụ service discovery, với cloud map chúng ta có thể xác định tên tùy chỉnh cho các tài nguyên ứng dụng của mình, và dịch vụ này duy trì ví trí cập nhật của những tài nguyên thay đổi linh hoạt đó, làm tăng tính sẵn sàng, và kết nối vì cloud map luôn update thông tin mới nhất của các nguồn tài nguyên</p>
+<p><strong>sơ đồ hệ thống</strong>:</p>
+<p><img alt="create alb" src="../../../../images/3.ecs/3.4.15.diagram.png"></p>
+
+<div class="notices info" ><p>ở đây mình sử dụng kiến trúc vpc, và ECS cluster đã tạo ở phần trước</p>
+</div>
+
+<p><strong>step 1</strong>: tạo 1 Application loadbalancer</p>
+<ul>
+<li>đăng nhập vào màn hình console chọn dịch vụ loadbalancer sau đó click create load balancer chọn type là application loadbalancer
+<img alt="create alb" src="../../../../images/3.ecs/3.4.15-create-alb.png"></li>
+<li>nhập tên load balancer, chọn intenet facing để expose ra ngoài internet
+<img alt="create alb" src="../../../../images/3.ecs/3.4.16.create-alb.png"></li>
+<li>chọn tất cả subnet để alb hight avaibility
+<img alt="create alb" src="../../../../images/3.ecs/3.4.17.create-alb.png"></li>
+<li>security group để all traffic từ internet
+<img alt="create alb" src="../../../../images/3.ecs/3.4.18.create-alb.png"></li>
+<li>tạo target group là ipaddress
+sau đó chọn create alb
+<img alt="create alb" src="../../../../images/3.ecs/3.4.19.create-alb.png">
+<img alt="create alb" src="../../../../images/3.ecs/3.4.20.create-alb.png"></li>
+</ul>
+<p><strong>Step2</strong>: tạo 1 task defination:</p>
+<ul>
+<li>điền các thông tin define cấu hình container, kiến trúc như hình dưới
+<img alt="create tf" src="../../../../images/3.ecs/3.4.21.create-taskdf.png">
+<img alt="create tf" src="../../../../images/3.ecs/3.4.21.create-tf.png">
+<img alt="create tf" src="../../../../images/3.ecs/3.4.22.create-tf.png"></li>
+<li>các option khác mình để mặc định</li>
+</ul>
+<p><strong>step3</strong>: tạo 1 service từ task defination</p>
+<ul>
+<li>khi tạo, service sẽ tạo ra nhiều task tương ứng với các container runtime đang chạy dựa vào task defination</li>
+<li>Mở console màn hình ECS ấn vào fcj_demo_ecs sau đó chọn create service</li>
+<li>chọn launch type là fargate</li>
+</ul>
+<p><img alt="create tf" src="../../../../images/3.ecs/3.4.23-create-service.png"></p>
+<ul>
+<li>chọn task defination family là task defination mình vừa tạo
+<img alt="create tf" src="../../../../images/3.ecs/3.4.24.create-service.png"></li>
+<li>chọn turn on connect
+<img alt="create tf" src="../../../../images/3.ecs/3.4.25.create-service.png"></li>
+<li>chọn networking và subnet là private subnet</li>
+<li>lưu ý: khi container đc chạy trong private subnet bạn cần đảm bảo rằng đã có NAT gateway để fargate có thể pull image từ public repo về
+<img alt="create tf" src="../../../../images/3.ecs/3.4.26.create-service.png"></li>
+<li>chọn loadbalancer và listener đã tạo ở bước 1</li>
+<li>chọn security allow all traffic
+<img alt="create tf" src="../../../../images/3.ecs/3.4.27.create-service.png">
+<img alt="create tf" src="../../../../images/3.ecs/3.4.28.create-service.png"></li>
+<li>các option khác để mặc định</li>
+<li>click create service</li>
+<li>chờ container start và access vào link loadbalancer xem kết quả
+<img alt="create tf" src="../../../../images/3.ecs/3.4.29.check-status.png"></li>
+</ul>
 
 
 
@@ -870,7 +924,7 @@
 			<a class="nav nav-prev" href="../../../../vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/" title="Create Cluster with fargate launch type"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="../../../../vi/4-eks/" title="Elacstic Kubernetes Service" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="../../../../vi/4-eks/" title="" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -880,19 +934,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="../../../../js/clipboard.min.js?1710052815"></script>
-    <script src="../../../../js/perfect-scrollbar.min.js?1710052815"></script>
-    <script src="../../../../js/perfect-scrollbar.jquery.min.js?1710052815"></script>
-    <script src="../../../../js/jquery.sticky.js?1710052815"></script>
-    <script src="../../../../js/featherlight.min.js?1710052815"></script>
-    <script src="../../../../js/highlight.pack.js?1710052815"></script>
+    <script src="../../../../js/clipboard.min.js?1710174364"></script>
+    <script src="../../../../js/perfect-scrollbar.min.js?1710174364"></script>
+    <script src="../../../../js/perfect-scrollbar.jquery.min.js?1710174364"></script>
+    <script src="../../../../js/jquery.sticky.js?1710174364"></script>
+    <script src="../../../../js/featherlight.min.js?1710174364"></script>
+    <script src="../../../../js/highlight.pack.js?1710174364"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="../../../../js/modernizr.custom-3.6.0.js?1710052815"></script>
-    <script src="../../../../js/learn.js?1710052815"></script>
-    <script src="../../../../js/hugo-learn.js?1710052815"></script>
+    <script src="../../../../js/modernizr.custom-3.6.0.js?1710174364"></script>
+    <script src="../../../../js/learn.js?1710174364"></script>
+    <script src="../../../../js/hugo-learn.js?1710174364"></script>
 
-    <link href="../../../../mermaid/mermaid.css?1710052815" rel="stylesheet" />
-    <script src="../../../../mermaid/mermaid.js?1710052815"></script>
+    <link href="../../../../mermaid/mermaid.css?1710174364" rel="stylesheet" />
+    <script src="../../../../mermaid/mermaid.js?1710174364"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
