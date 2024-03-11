@@ -1,104 +1,104 @@
 [
 {
-	"uri": "//localhost:1313/",
+	"uri": "/",
 	"title": "Container Service on AWS",
 	"tags": [],
 	"description": "",
 	"content": "Work with Amazon Elacstic Container Service and Amazon Elacstic Kubernetes Service Overall In this lab, you\u0026rsquo;ll learn the basics and practice of ECS and EKS\nContent Introduction Environment Setup Amazon Elacstic Container Service "
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
+	"uri": "/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
 	"title": "Create Cluster with EC2 launch type",
 	"tags": [],
 	"description": "",
 	"content": "\rIn order for Ec2 node to join the ECS cluster, you must install enough SSM agent, ECS container agent and docker, otherwise you can use optimized AMI for Ecs (see more: https://docs.aws.amazon.com /AmazonECS/latest/developerguide/ecs-optimized_AMI.html)\nprestart:\nI use terraform to create VPC resources: repo link here https://github.com/linhfishhh/workshop-source run command terraform init and terraform apply -auto-approve Step1: Create cluster\nfrom aws console search find ECS service and select create cluster Fill in the cluster name information and click create Step2: create role for ec2 instance profile:\nIn order for an ec2 to join the ECS cluster, we need to add 2 policies: AmazonEC2ContainerServiceforEC2Role and AmazonSSMManagedInstanceCore. Without these two roles, the node will not be able to join the cluster. access IAM service -\u0026gt; Roles -\u0026gt; Create Role add 2 managed policies AmazonEC2ContainerServiceforEC2Role and AmazonSSMManagedInstanceCore to that role Step3: Create an Ec2 server with the created role\nopen the command line and search optimized AMI for ecs with the command:\naws ssm get-parameters \u0026ndash;names /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended \u0026ndash;region ap-southeast-1 reference: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/retrieve-ecs-optimized_AMI.html launch an ec2 server with the ami id you just found above with the instance profile being the role you created in step 2. I leave all traffic to the security group rules to do the lab in the advance detail -\u0026gt; instance profile section, select the role just created in step2 Fill in the user data section with the following content: #!/bin/bash\necho ECS_CLUSTER=fcj_demo_ecs \u0026raquo; /etc/ecs/ecs.config Return to the ECS console and wait until ec2 is in running state to join your cluster "
 },
 {
-	"uri": "//localhost:1313/1-introduce/",
+	"uri": "/1-introduce/",
 	"title": "Introduction",
 	"tags": [],
 	"description": "",
 	"content": "Container is a lightweight, portable piece of software that packages an application along with all the libraries and dependencies needed to run the application on any environment.\nBy using container technology, you will get the following advantages:\nportability: Containers can run on any environment that has a container runtime, from personal computers to public and private cloud environments. Fast startup: Containers usually start up very quickly compared to virtual machines. This helps speed up deployment and response when applications need to be scaled up or down. Ability to share system infrastructure: Containers share the kernel with the host computer, not a complete operating system like a virtual machine. Therefore, they consume less system resources and allow running multiple containers on the same server without resource issues. Flexible Management: Containers can be managed, scaled, and load-balanced more flexibly using container management tools such as Kubernetes, Docker Swarm, or similar solutions . Platform-independent packaging: Containers provide a way to package an application and all its dependencies into a portable, platform-agnostic unit. This simplifies deployment and migration of applications between different environments. With the above advantages, containers provide better flexibility, performance, and resource management than virtualization platforms such as Virtual machines.\n"
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.1-overview/",
+	"uri": "/3-ecs/3.1-overview/",
 	"title": "overview",
 	"tags": [],
 	"description": "",
 	"content": "Elacstic container service: is a container orchestration service of Amazon aws service, designed to deploy and manage the scale of applications running on runtime containers such as Docker easily on Aws.\nSome key points of ECS:\nCluster management: ECS allows creating and managing clusters with EC2 or Fargate nodes to run your containers Task and service management: ECS uses the concepts of tasks and services. Task represents a group of containers running together on an EC2 instance. A service is a collection of tasks that act as an application, ECS will keep the number of service tasks stable and perform auto-scaling if necessary. Deep integration with other AWS services: ECS integrates well with other AWS services such as EC2, Elastic Load Balancing (ELB), Auto Scaling, IAM, and CloudWatch, helping you deploy and Operate applications easily and efficiently. Integration with Docker: ECS supports the use of Docker to package and run applications. You can use Docker CLI or container management tools like Docker Compose to deploy applications to ECS. Security and access management: ECS integrates with AWS Identity and Access Management (IAM), allowing you to control access to ECS resources in a granular and flexible way. "
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/",
+	"uri": "/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/",
 	"title": "Create Cluster with fargate launch type",
 	"tags": [],
 	"description": "",
 	"content": "Step1: initialize VPC, subnet and network-related resources\nclone terraform source code at repo: https://github.com/linhfishhh/workshop-source vpc cd terraform init terraform apply -auto-approve step2: go to the aws console screen of the ecs service\nselect create cluster enter a name and select the fargate option click create cluster "
 },
 {
-	"uri": "//localhost:1313/2-environment-setup/",
+	"uri": "/2-environment-setup/",
 	"title": "Environment setup",
 	"tags": [],
 	"description": "",
 	"content": "\rI use Windows OS to do the lab. So the tools below will be used for Windows. If you want to use other tools, you can find out how to install on Google or equivalent tools.\nInstall chocolatey (This is a windows application management tool) see: https://chocolatey.org/install install aws-cli run command line window with administrator choco install awscli check the successful installation of aws-cli with the command: aws \u0026ndash;version configure aws-cli: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html Install terraform: Terraform is an infrastructure as code tool. I use this tool to automatically create aws networking resources\nInstall: choco install terraform test: terraform -v Install helm chart choco install helm check: helm verison install kubectl choco install kubectl check: kubectl version Additionally, you can install eksctl from aws: see: https://eksctl.io/installation/ "
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.2-networking/",
+	"uri": "/3-ecs/3.2-networking/",
 	"title": "Networking",
 	"tags": [],
 	"description": "",
 	"content": "\rThe ECS node and fargate are communicating with each other and with the internet via a virtual private network (VPC). I will not go into detail about this topic, because this series mainly focuses on aws container services\nVPC xem: https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html\nNetwork mods: Host Mode:\nThis is the basic network mode supported in ECS, when using the container host network mode is directly linked to the server running the container, it is quite similar to the concept of docker host network Bridge Mode:\nUse a virtual bridge network to create a layer between the host and the container\u0026rsquo;s network, map the container\u0026rsquo;s port to the host\u0026rsquo;s port, mappings can be static or dynamic\nWith static mapping we can port the container to the host\u0026rsquo;s port, however static mapping only allows a single container to map to 1 port dynamic mapping by not specifying a port in the configuration, the container runtime will select a random, unused port from the temporary port range and designate that port as the public host port for the container bridge network is not used for containers running on fargate but only for containers running on EC2 servers VPC Mode:\nWith this mode, ECS creates and manages ENIs for each container. Each container will receive its own IP address in the VPC. This ENI is separate from the ENI of the EC2 server. If 1 EC2 runs multiple containers, the ENI of each container will be Separate from ec2, this can give more flexibility for port mapping and control but also has some problems\nAdvantages and disadvantages of each type of network mode 3.1. Host mode:\n3.1.1. Advantage: Performance: Host network mode allows the container to directly access all network resources of the host server, with no layer of limitation between the container and the host server. This can improve network performance for demanding applications. Simple: Host network mode eliminates the need to configure port forwarding or complex network rules to connect containers to external services. 3.1.2. Defect port conflic: In a multi-container environment, port conflicts can occur when multiple containers try to use the same port on the host server. limits scalability 3.2. Bridge mode\n3.2.1. Advantage: easy to deploy: Bridge mode is a simple, popular, and easy-to-manage deployment for containers. Supports multiple containers on one instance: You can run multiple containers on the same instance and they can communicate with each other via bridge network (see: ). Independent of the AWS environment: Bridge mode does not require specific AWS network resources and can run on self-managed servers. 3.2.2. Defect: port conflic in case of multiple containers running on the same instance: When multiple containers share the same physical server, ports may conflict, leading to difficulties in management and configuration. 3.3: VPC mode\n3.3.1. Advantage: Higher Isolation: Each container will have a network interface and a unique IP address, helping to isolate data between containers. Flexible network management: Enables you to manage your network of containers like EC2 instances through Amazon VPC. Good Integration with other AWS services: Provides easy integration with other AWS services such as Load Balancer, Security Groups, and IAM. 3.3.2. Defect: More complex to deploy and manage: Configuring and deploying an awsvpc environment can be more complex than bridge mode. Limited number of containers per instance: Because each container needs its own network interface, deploying multiple containers on one instance may cause network resource limitations. "
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.3-basic-concept/",
+	"uri": "/3-ecs/3.3-basic-concept/",
 	"title": "Basic concept",
 	"tags": [],
 	"description": "",
 	"content": "This guide will guide and explain the basic concepts of service, task, task definition\u0026hellip;\nlaunch type; fargate:\nserverless service to run applications in containers without having to worry about infrastructure management suitable for large workloads requiring low operating costs Small workload only starts occasionally Batch workload EC2: containers will be run in EC2 instances with container runtime\nSuitable for large workloads that require price optimization but requires managing EC2 servers Cluster: the largest unit in ECS, it provides necessary resources such as EC2 or fargate to run the application Tasks: A resource allocated unit, a task can contain many containers Task definition Is a detailed configuration definition for the application (details: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html) Service: A group of tasks with common tasks are exposed outside or inside the cluster Container runtime: a runable image ECS connect service: provides service-to-service communication mechanism "
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/",
+	"uri": "/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/",
 	"title": "deploy sample application",
 	"tags": [],
 	"description": "",
 	"content": "\rIn this lab, I will show you how to deploy a small service on AWS ecs\nHere I use the vpc architecture, and the ECS cluster created in the previous section\ndiagram: step 1: create an Application loadbalancer\nLog in to the console screen, select the loadbalancer service, then click create load balancer, select the type as application loadbalancer Enter the load balancer name, select internet facing to expose it to the internet select all subnets for higher availability security group for all traffic from the internet create target group as ipaddress then select create album Step2: create a definition task:\nFill in the information to define the container configuration and architecture as shown below I leave other options as default step3: create a service from task definition\nWhen created, the service will create many tasks corresponding to the running runtime containers based on task definition Open the ECS screen console, click on fcj_demo_ecs then select create service select launch type as fargate Select the define task family as the define task you just created select turn on connect select networking and subnet as private subnet Note: when the container is running in a private subnet, you need to make sure that there is a NAT gateway so fargate can pull the image from the public repo. select loadbalancer and listener created in step 1 select security allow all traffic Other options leave as default click create service wait for the container to start and access the loadbalancer link to see the results "
 },
 {
-	"uri": "//localhost:1313/3-ecs/",
+	"uri": "/3-ecs/",
 	"title": "Elacstic Container Service",
 	"tags": [],
 	"description": "",
 	"content": "In this step, we will create VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nContent 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\\\n"
 },
 {
-	"uri": "//localhost:1313/3-ecs/3.4-create-cluster/",
+	"uri": "/3-ecs/3.4-create-cluster/",
 	"title": "Create Cluster",
 	"tags": [],
 	"description": "",
 	"content": "Overview In this lab we will create a cluster with EC2 launch type and fargate\nContent:\n3.4.1. create cluster with ec2 launch type 3.4.2. create cluster with fargate 3.4.3. deploy sample application "
 },
 {
-	"uri": "//localhost:1313/4-eks/",
+	"uri": "/4-eks/",
 	"title": "",
 	"tags": [],
 	"description": "",
 	"content": " "
 },
 {
-	"uri": "//localhost:1313/6-cleanup/",
+	"uri": "/6-cleanup/",
 	"title": "",
 	"tags": [],
 	"description": "",
 	"content": " "
 },
 {
-	"uri": "//localhost:1313/categories/",
+	"uri": "/categories/",
 	"title": "Categories",
 	"tags": [],
 	"description": "",
 	"content": ""
 },
 {
-	"uri": "//localhost:1313/tags/",
+	"uri": "/tags/",
 	"title": "Tags",
 	"tags": [],
 	"description": "",

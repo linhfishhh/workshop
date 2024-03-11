@@ -2,184 +2,184 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/</loc>
+    <loc>/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/"
+                href="/vi/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/"
+                href="/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/</loc>
+    <loc>/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
+                href="/vi/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
+                href="/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/"
                 />
   </url><url>
-    <loc>//localhost:1313/1-introduce/</loc>
+    <loc>/1-introduce/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/1-introduce/"
+                href="/vi/1-introduce/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/1-introduce/"
+                href="/1-introduce/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.1-overview/</loc>
+    <loc>/3-ecs/3.1-overview/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.1-overview/"
+                href="/vi/3-ecs/3.1-overview/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.1-overview/"
+                href="/3-ecs/3.1-overview/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/</loc>
+    <loc>/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
+                href="/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
+                href="/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/"
                 />
   </url><url>
-    <loc>//localhost:1313/2-environment-setup/</loc>
+    <loc>/2-environment-setup/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-environment-setup/"
+                href="/vi/2-environment-setup/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-environment-setup/"
+                href="/2-environment-setup/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.2-networking/</loc>
+    <loc>/3-ecs/3.2-networking/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.2-networking/"
+                href="/vi/3-ecs/3.2-networking/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.2-networking/"
+                href="/3-ecs/3.2-networking/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.3-basic-concept/</loc>
+    <loc>/3-ecs/3.3-basic-concept/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.3-basic-concept/"
+                href="/vi/3-ecs/3.3-basic-concept/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.3-basic-concept/"
+                href="/3-ecs/3.3-basic-concept/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/</loc>
+    <loc>/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
+                href="/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
+                href="/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/</loc>
+    <loc>/3-ecs/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/"
+                href="/vi/3-ecs/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/"
+                href="/3-ecs/"
                 />
   </url><url>
-    <loc>//localhost:1313/3-ecs/3.4-create-cluster/</loc>
+    <loc>/3-ecs/3.4-create-cluster/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-ecs/3.4-create-cluster/"
+                href="/vi/3-ecs/3.4-create-cluster/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-ecs/3.4-create-cluster/"
+                href="/3-ecs/3.4-create-cluster/"
                 />
   </url><url>
-    <loc>//localhost:1313/4-eks/</loc>
+    <loc>/4-eks/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/4-eks/"
+                href="/vi/4-eks/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/4-eks/"
+                href="/4-eks/"
                 />
   </url><url>
-    <loc>//localhost:1313/6-cleanup/</loc>
+    <loc>/6-cleanup/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/6-cleanup/"
+                href="/vi/6-cleanup/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/6-cleanup/"
+                href="/6-cleanup/"
                 />
   </url><url>
-    <loc>//localhost:1313/categories/</loc>
+    <loc>/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/categories/"
+                href="/vi/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/categories/"
+                href="/categories/"
                 />
   </url><url>
-    <loc>//localhost:1313/tags/</loc>
+    <loc>/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/tags/"
+                href="/vi/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/tags/"
+                href="/tags/"
                 />
   </url>
 </urlset>

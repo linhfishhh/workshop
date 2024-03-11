@@ -1,104 +1,104 @@
 [
 {
-	"uri": "//localhost:1313/vi/1-introduce/",
+	"uri": "/vi/1-introduce/",
 	"title": "Giới thiệu",
 	"tags": [],
 	"description": "",
 	"content": "Container là Một phần mềm nhẹ, di động và đóng gói ứng dụng cùng với tất cả các library và dependency của cần thiết để chạy ứng dụng trên bất kỳ môi trường nào.\nVới việc sử dụng công nghệ container, bạn sẽ có được những ưu điểm sau:\nkhả năng di động: Containers có thể chạy trên bất kỳ môi trường nào mà có container runtime, từ máy tính cá nhân đến các môi trường cloud công cộng và riêng tư. Khởi động nhanh chóng: Containers thường khởi động rất nhanh so với máy ảo. Điều này giúp tăng tốc độ triển khai và phản hồi khi cần phải mở rộng hoặc giảm thiểu ứng dụng. Khả năng chia sẻ hạ tầng hệ thống: Containers chia sẻ kernel với máy chủ chứ không phải là một hệ điều hành hoàn chỉnh như máy ảo. Do đó, chúng tiêu tốn ít tài nguyên hệ thống hơn và cho phép chạy nhiều container trên cùng một máy chủ mà không gặp vấn đề về tài nguyên. Quản lý linh hoạt:Containers có thể được quản lý, mở rộng và cân bằng tải một cách linh hoạt hơn bằng cách sử dụng các công cụ quản lý container như Kubernetes, Docker Swarm, hoặc các giải pháp tương tự. Đóng gói độc lập với nền tảng: Containers cung cấp một cách để đóng gói ứng dụng và tất cả các phụ thuộc của nó thành một đơn vị di động, không phụ thuộc vào nền tảng cụ thể nào. Điều này giúp đơn giản hóa việc triển khai và di chuyển ứng dụng giữa các môi trường khác nhau. Với những ưu điểm trên, container mang lại sự linh hoạt, hiệu suất, quản lý tài nguyên tốt hơn so với những nên tảng ảo hóa như Virtual machine.\nDưới đây mình sẽ giới thiệu và làm hướng dẫn sử dụng 2 dịch vụ container của Aws là ECS và EKS\n"
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
+	"uri": "/vi/3-ecs/3.4-create-cluster/3.4.1-create-cluster-ec2/",
 	"title": "Khởi tạo cluster với EC2 launch type",
 	"tags": [],
 	"description": "",
 	"content": "\rĐể Ec2 node có thể join vào trong ECS cluster bạn phải cài đặt đủ SSM agent, ECS container agent và docker, nếu không bạn có thể sử dụng optimized AMI cho Ecs (xem thêm: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html)\nprestart:\nMình sử dung terraform cho việc tạo các VPC resource: link repo tại đây https://github.com/linhfishhh/workshop-source chạy command terraform init và terraform apply -auto-approve Step1: Tạo cluster\ntừ aws console search tìm dịch vụ ECS rồi chọn create cluster Điền thông tin tên cluter rồi click create Step2: tạo role cho ec2 instance profile:\nđể một ec2 join với cluster ECS chúng ta cần thêm 2 policy: AmazonEC2ContainerServiceforEC2Role và AmazonSSMManagedInstanceCore nếu thiếu 2 role này node sẽ không thể join vào cluster\ntruy cập dịch vụ IAM -\u0026gt; Roles -\u0026gt; Create Role\nadd thêm 2 managed policy AmazonEC2ContainerServiceforEC2Role và AmazonSSMManagedInstanceCore vào role đó Step3: Tạo 1 server Ec2 với role đã tạo\nmở command line và search optimized AMI cho ecs với lệnh:\naws ssm get-parameters \u0026ndash;names /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended \u0026ndash;region ap-southeast-1 reference: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/retrieve-ecs-optimized_AMI.html launch một ec2 server với ami id vừa tìm được ở trên với instance profile là role bạn đã tạo ở step 2. mình để all traffic cho các rule của security group để làm lab tại phần advance detail -\u0026gt; instance profile chọn role vừa tạo ở step2 điền thêm phần user data với nội dung: #!/bin/bash echo ECS_CLUSTER=fcj_demo_ecs \u0026raquo; /etc/ecs/ecs.config trở lại console ECS và chờ khi ec2 ở trạng thái running sẽ join vào cluster của bạn "
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.1-overview/",
+	"uri": "/vi/3-ecs/3.1-overview/",
 	"title": "overview",
 	"tags": [],
 	"description": "",
 	"content": "Elacstic container service: là một dịch vụ container orchestration của Amazon aws service, thiết kế để triển khai, quản lý scale các ứng dụng chạy trên các runtime container như Docker một cách dễ dàng trên Aws.\nMột số điểm chính của ECS:\nQuản lý cluster: ECS cho phép tạo và quản lý cluster với các node EC2 hoặc Fargate để chạy các container của bạn Quản lý task và service: ECS sử dụng các khái niệm về task và service. Task đại diện cho một nhóm các container chạy cùng nhau trên một instance EC2. Service là một tập hợp các task đóng vai trò như một ứng dụng, ECS sẽ giữ cho số lượng task của service ổn định và thực hiện auto-scaling nếu cần thiết. Tích hợp sâu sắc với các dịch vụ AWS khác: ECS tích hợp tốt với các dịch vụ khác của AWS như EC2, Elastic Load Balancing (ELB), Auto Scaling, IAM và CloudWatch, giúp bạn triển khai và vận hành các ứng dụng một cách dễ dàng và hiệu quả. Tích hợp với Docker: ECS hỗ trợ việc sử dụng Docker để đóng gói và chạy các ứng dụng. Bạn có thể sử dụng Docker CLI hoặc các công cụ quản lý container như Docker Compose để triển khai các ứng dụng lên ECS. Bảo mật và quản lý quyền truy cập: ECS tích hợp với AWS Identity and Access Management (IAM), cho phép bạn kiểm soát quyền truy cập vào các tài nguyên của ECS một cách chi tiết và linh hoạt. "
 },
 {
-	"uri": "//localhost:1313/vi/",
+	"uri": "/vi/",
 	"title": "Session Management",
 	"tags": [],
 	"description": "",
 	"content": "Làm việc với Elacstic Container Serivce và Amazon Kubernetes Service Tổng quan Trong phòng thí nghiệm này, bạn sẽ tìm hiểu những kiến ​​thức cơ bản và thực hành về ECS và EKS\nNội dung Giới thiệu Thiết lập môi trường Amazon Elacstic Container Service "
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/",
+	"uri": "/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/",
 	"title": "Create Cluster with fargate launch type",
 	"tags": [],
 	"description": "",
 	"content": "Step1: khởi tạo VPC, subnet và các resource liên quan đến network\nclone source code terraform tại repo: https://github.com/linhfishhh/workshop-source cd vpc terraform init terraform apply -auto-approve step2: vào màn hình aws console của dịch vụ ecs\nchọn tạo cluster nhập tên và chọn option fargate click tạo cluster "
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.2-networking/",
+	"uri": "/vi/3-ecs/3.2-networking/",
 	"title": "Networking",
 	"tags": [],
 	"description": "",
 	"content": "\rECS node và fargate là giao tiếp với nhau và với internet thông qua mạng riêng ảo (VPC). mình sẽ không đi sâu về chủ đề này, vì series này chủ yếu tập chung vào các dịch vụ container của aws\nVPC xem: https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html\nNetwork mod: Host Mode:\nđây là chế độ mạng cơ bản được hỗ trợ trong ECS, khi sử dụng host mode network của container được liên kết trực tiếp với máy chủ đang chạy container, nó khá giống với concept của host network docker Bridge Mode:\nsử dụng mạng bridge network ảo để tạo lớp giữa máy chủ và mạng của container, ánh xạ port của container với port của máy chủ, các ánh xạ có thể là tĩnh hoặc động\nvới ánh xạ tĩnh chúng ta có thể port container tới port của host tuy nhiên ánh xạ tĩnh chỉ cho phép một vùng chứa duy nhất ánh xạ tới 1 port ánh xạ động bẳng cách không chỉ định port trong cấu hình, container runtime sẽ chọn 1 cổng ngẫu nhiên, chưa được sử dụng từ phạm vi cổng tạm thời và chỉ định cổng đó làm cổng máy chủ công cộng cho container bridge network không được sử dụng cho các container chạy trên fargate mà chỉ được sử dụng cho container chạy trên các máy chủ EC2 VPC Mode:\nVới mode này ECS tạo và quản lý các ENI cho từng container, mỗi container sẽ nhận được địa chỉ ip riêng trong VPC, ENI này tách biệt với ENI của máy chủ EC2, nếu 1 EC2 chạy nhiều container thì ENI của mỗi container sẽ riêng biệt với ec2, điều này có thể cho ta nhiều tính linh hoạt hơn cho việc ánh xạ và kiểm soát port nhưng cũng gặp phải 1 số vấn đề\nưu nhược điểm của từng loại network mode 3.1. Host mode: 3.1.1. Ưu điểm: Hiệu suất: Host network mode cho phép container truy cập trực tiếp vào tất cả các tài nguyên mạng của máy chủ host, không có lớp giới hạn nào giữa container và máy chủ host. Điều này có thể cải thiện hiệu suất mạng cho các ứng dụng yêu cầu cao. tính Đơn giản: Host network mode loại bỏ sự cần thiết phải định cấu hình các cổng chuyển tiếp (port forwarding) hoặc các quy tắc mạng phức tạp để kết nối container với các dịch vụ bên ngoài. 3.1.2. Nhược điểm port conflic: Trong môi trường chạy nhiều container, có thể xảy ra xung đột cổng khi nhiều container cố gắng sử dụng cùng một cổng trên máy chủ host. làm hạn chế khả năng mở rộng 3.2. Bridge mode 3.2.1. Ưu điểm: dễ triển khai: Bridge mode là một cách triển khai đơn giản, phổ biến và dễ quản lý cho các container. Hỗ trợ nhiều container trên một instance: Bạn có thể chạy nhiều container trên cùng một instance và chúng có thể giao tiếp với nhau thông qua bridge network (xem: ). Độc lập với môi trường AWS: Bridge mode không yêu cầu các tài nguyên mạng cụ thể của AWS và có thể chạy trên các máy chủ tự quản lý. 3.2.2. Nhược điểm: port conflic trong trường hợp nhiều container cùng chạy trên cùng một instance: Khi nhiều container chia sẻ cùng một máy chủ vật lý, các cổng có thể bị xung đột, dẫn đến khó khăn trong việc quản lý và cấu hình. 3.3: VPC mode 3.3.1. Ưu điểm: Isolation (Cô lập) cao hơn: Mỗi container sẽ có một network interface và một địa chỉ IP duy nhất, giúp cô lập dữ liệu giữa các container. Quản lý mạng linh hoạt: Cho phép bạn quản lý mạng của các container giống như các EC2 instance thông qua Amazon VPC. Khả năng Tích hợp tốt với các dịch vụ AWS khác: Cung cấp tích hợp dễ dàng với các dịch vụ AWS khác như Load Balancer, Security Groups, và IAM. 3.3.2. Nhược điểm: Phức tạp hơn trong triển khai và quản lý: Cấu hình và triển khai một môi trường awsvpc có thể phức tạp hơn so với bridge mode. Hạn chế về số lượng container trên mỗi instance: Do mỗi container cần một network interface riêng, việc triển khai nhiều container trên một instance có thể gây ra giới hạn về tài nguyên mạng. "
 },
 {
-	"uri": "//localhost:1313/vi/2-environment-setup/",
+	"uri": "/vi/2-environment-setup/",
 	"title": "Thiết lập môi trường",
 	"tags": [],
 	"description": "",
 	"content": "\rMình sử dụng HDH window thể thực hiện bài lab. nên những công cụ dưới đấy sẽ sử dụng cho HDH window, nếu sử dụng HDH khác bạn có thể tìm hiểu cách cài đặt trên google hoặc các công cụ tương đương.\nCài đặt chocolatey (Đây là 1 công cụ quản lý ứng dụng của window) xem: https://chocolatey.org/install cài đặt aws-cli chạy cửa sổ dòng lệnh với quyển administrator choco install awscli kiểm tra cài đặt thành công aws-cli bằng lệnh: aws \u0026ndash;version configure aws-cli: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html Cài đặt terraform: Terraform là công cụ infrastucture as code. mình sử dụng công cụ này để tự động hóa tạo các aws networking resource\nCài đặt: choco install terraform kiểm tra: terraform -v Cài đặt helm chart choco install helm kiểm tra: helm verison cài đặt kubectl choco install kubectl kiểm tra: kubectl version Ngoài ra bạn có thể cài đặt thêm eksctl từ aws: xem: https://eksctl.io/installation/ "
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.3-basic-concept/",
+	"uri": "/vi/3-ecs/3.3-basic-concept/",
 	"title": "basic concept",
 	"tags": [],
 	"description": "",
 	"content": "trong guide này sẽ hướng dẫn, giải thích các khái niệm cơ bản của service, task, task defination\u0026hellip;\nlaunch type; fargate:\ndịch vụ serverless để chạy các ứng dụng trong container mà không cần quan tâm đến việc quản lý cơ sở hạ tầng phù hợp với những workload lớn đòi hỏi chi phí hoạt động thấp workload nhỏ thỉnh thoảng mới start Batch workload EC2: các container sẽ được chạy trong EC2 instance với container runtime\nphù hợp với workload lớn cần tối ưu về giá tuy nhiên tốn cần phải quản lý các server EC2 Cluster: đơn vị lớn nhất trong ECS, nó cung cấp tài nguyên cần thiết như EC2 hoặc fargate để chạy ứng dụng Task: Một đơn vị được cấp phát tài nguyên, một task có thể chứa nhiều container Task defination Là bản định nghĩa cấu hình chi tiết cho ứng dụng (chi tiết: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html) Service: Một nhóm các task có chung nhiệm vụ được expose ra bên ngoài hoặc nội bộ cluster Container runtime một runable image ECS connect servie: cung cấp cơ chế service-to-service communication "
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/",
+	"uri": "/vi/3-ecs/",
 	"title": "Elacstic Container Service",
 	"tags": [],
 	"description": "",
 	"content": "Trong lab này, chúng ta sẽ tạo VPC, ECS cluster, Node, Autoscaling node, etc\u0026hellip;\nNội dung 3.1. overview 3.2. networking\n3.3. basic concept\n3.4. create cluster\\\n"
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/",
+	"uri": "/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/",
 	"title": "Triển khai sample application",
 	"tags": [],
 	"description": "",
 	"content": "\rtrong lab này mình sẽ hướng dẫn triển khai một service nhỏ trên aws ecs\nsơ đồ hệ thống:\nở đây mình sử dụng kiến trúc vpc, và ECS cluster đã tạo ở phần trước\nstep 1: tạo 1 Application loadbalancer\nđăng nhập vào màn hình console chọn dịch vụ loadbalancer sau đó click create load balancer chọn type là application loadbalancer nhập tên load balancer, chọn intenet facing để expose ra ngoài internet chọn tất cả subnet để alb hight avaibility security group để all traffic từ internet tạo target group là ipaddress sau đó chọn create alb Step2: tạo 1 task defination:\nđiền các thông tin define cấu hình container, kiến trúc như hình dưới các option khác mình để mặc định step3: tạo 1 service từ task defination\nkhi tạo, service sẽ tạo ra nhiều task tương ứng với các container runtime đang chạy dựa vào task defination Mở console màn hình ECS ấn vào fcj_demo_ecs sau đó chọn create service chọn launch type là fargate chọn task defination family là task defination mình vừa tạo chọn turn on connect chọn networking và subnet là private subnet lưu ý: khi container đc chạy trong private subnet bạn cần đảm bảo rằng đã có NAT gateway để fargate có thể pull image từ public repo về chọn loadbalancer và listener đã tạo ở bước 1 chọn security allow all traffic các option khác để mặc định click create service chờ container start và access vào link loadbalancer xem kết quả "
 },
 {
-	"uri": "//localhost:1313/vi/3-ecs/3.4-create-cluster/",
+	"uri": "/vi/3-ecs/3.4-create-cluster/",
 	"title": "Khởi tạo 1 ECS cluster",
 	"tags": [],
 	"description": "",
 	"content": "Tổng quan trong lab này chúng ta sẽ tạo 1 cluster với EC2 launch type và fargate\nNội dung:\n3.4.1. tạo cluster với ec2 launch type 3.4.2. tạo cluster với fargate 3.4.3. triển khai ứng dụng sample với ECS "
 },
 {
-	"uri": "//localhost:1313/vi/4-eks/",
+	"uri": "/vi/4-eks/",
 	"title": "",
 	"tags": [],
 	"description": "",
 	"content": " "
 },
 {
-	"uri": "//localhost:1313/vi/6-cleanup/",
+	"uri": "/vi/6-cleanup/",
 	"title": "",
 	"tags": [],
 	"description": "",
 	"content": " "
 },
 {
-	"uri": "//localhost:1313/vi/categories/",
+	"uri": "/vi/categories/",
 	"title": "Categories",
 	"tags": [],
 	"description": "",
 	"content": ""
 },
 {
-	"uri": "//localhost:1313/vi/tags/",
+	"uri": "/vi/tags/",
 	"title": "Tags",
 	"tags": [],
 	"description": "",
