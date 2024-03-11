@@ -2,19 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/vi/</loc>
-    <lastmod>1970-01-01T07:33:41+07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="//localhost:1313/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="vi"
-                href="//localhost:1313/vi/"
-                />
-  </url><url>
     <loc>//localhost:1313/vi/1-introduce/</loc>
     <xhtml:link
                 rel="alternate"
@@ -49,6 +36,18 @@
                 rel="alternate"
                 hreflang="vi"
                 href="//localhost:1313/vi/3-ecs/3.1-overview/"
+                />
+  </url><url>
+    <loc>//localhost:1313/vi/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/"
                 />
   </url><url>
     <loc>//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.2-create-cluster-fargate/</loc>
@@ -123,18 +122,6 @@
                 href="//localhost:1313/vi/3-ecs/3.4-create-cluster/3.4.3-deploy-microservice-ecs/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/4-eks/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="//localhost:1313/4-eks/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="vi"
-                href="//localhost:1313/vi/4-eks/"
-                />
-  </url><url>
     <loc>//localhost:1313/vi/3-ecs/3.4-create-cluster/</loc>
     <xhtml:link
                 rel="alternate"
@@ -147,8 +134,19 @@
                 href="//localhost:1313/vi/3-ecs/3.4-create-cluster/"
                 />
   </url><url>
+    <loc>//localhost:1313/vi/4-eks/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/4-eks/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/4-eks/"
+                />
+  </url><url>
     <loc>//localhost:1313/vi/6-cleanup/</loc>
-    <lastmod>1970-01-01T07:33:41+07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
